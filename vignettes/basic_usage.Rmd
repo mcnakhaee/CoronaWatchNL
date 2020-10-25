@@ -1,0 +1,102 @@
+---
+title: "basic_usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{basic_usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(CoronaWatchNL)
+library(sf)
+library(gganimate)
+library(tidyverse)
+library(ggthemes)
+library(santoku)
+library(cbsodataR)
+
+municipalBoundaries <- st_read("https://geodata.nationaalgeoregister.nl/cbsgebiedsindelingen/wfs?request=GetFeature&service=WFS&version=2.0.0&typeName=cbs_gemeente_2017_gegeneraliseerd&outputFormat=json")
+
+```
+
+```{r}
+
+daily_cases_per_municpality <- get_daily_cases_per_municpality()
+populatuon_per_region <- get_populatuon_per_region()
+
+daily_cases_per_municpality <- daily_cases_per_municpality %>% 
+  inner_join(populatuon_per_region,by = c('Municipality_name' = 'Regions')) %>% 
+    mutate(Date_of_publication = lubridate::as_date(Date_of_publication),
+    day = lubridate::round_date(Date_of_publication ,unit = 'day'),
+   day = lubridate::as_date(day),
+   avg = 100000*as.numeric(Total_reported)/as.numeric(`Bevolking op 1 januari (aantal)`),
+         dis_avg = chop(avg,c(0,0.5/7,35/7,86.5/7,162/7,264/7,388.5/7,536/7,721/7,1156.5/7)))
+
+
+glimpse(daily_cases_per_municpality)
+
+```
+
+```{r}
+daily_cases_per_municpality <- daily_cases_per_municpality %>% 
+  mutate(day_char_ = as.character(day))
+data <- municipalBoundaries%>% 
+  right_join(daily_cases_per_municpality ,by=c(statcode="Municipality_code"))
+```
+
+
+
+
+
+```{r}
+daily_cases_per_municpality %>% 
+  count(day)
+```
+
+
+```{r}
+data %>% 
+  #head(10000)
+  ggplot() +
+  geom_sf(aes(fill = dis_avg)) +
+  theme_void() +
+      scale_fill_manual(
+    values  = c(
+      '#f1faee',
+      '#b7e4c7',
+      '#95d5b2',
+      '#52b788',
+      '#2a9d8f',
+      '#e9c46a',
+      '#f4a261',
+      '#e76f51',
+      '#d00000',
+      '#9d0208'
+      
+      
+      
+      
+    )
+  ) +
+    coord_sf(datum = NA) +
+  labs(title = 'Date: {current_frame}') +
+transition_states(day_char_,transition_length = 2 ,state_length	= 2) +
+  ease_aes("linear") +
+    enter_fade() +
+  exit_shrink()
+
+
+```
+
+
