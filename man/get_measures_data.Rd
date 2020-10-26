@@ -4,12 +4,10 @@
 \alias{get_measures_data}
 \title{Get data for the measures taken by the government to fight the spread of Covid-19}
 \usage{
-get_measures_data(lang = "nl")
-}
-\arguments{
-\item{lang}{}
+get_measures_data()
 }
 \value{
+A dataframe with the following 9 columns:
 \describe{
 \item{measureID}{Measure ID}
 \item{measureDescription}{Description of the enforced measure}
@@ -26,5 +24,5 @@ get_measures_data(lang = "nl")
 Get data for the measures taken by the government to fight the spread of Covid-19
 }
 \examples{
-dim(measures_data)
+dim(get_measures_data())
 }

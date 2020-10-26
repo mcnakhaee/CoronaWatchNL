@@ -2,11 +2,12 @@
 % Please edit documentation in R/icu.R
 \name{get_lcps_data}
 \alias{get_lcps_data}
-\title{Get ICU patients data published by LCPS}
+\title{Get ICU patients data published by LCPS (Landelijk Coördinatiecentrum Patiënten Spreiding)}
 \usage{
 get_lcps_data()
 }
 \value{
+A dataframe with the 3 following columns:
 \describe{
 \item{Datum/Date}{Date of notification}
 \item{Land/Country}{Dutch COVID-19 cases were taken into the IC in either Germany (Duitsland) or the Netherlands (Nederland)}
@@ -15,4 +16,8 @@ get_lcps_data()
 }
 \description{
 These numbers are based on NICE data. However, to compensate for the reporting lag, LCPS tries to estimate the size of this lag and adds it to the numbers reported by NICE. LCPS data is, therefore, consistently higher than the 'totaalOpnamen' reported by NICE.
+}
+\examples{
+get_lcps_data() \%>\%
+head()
 }

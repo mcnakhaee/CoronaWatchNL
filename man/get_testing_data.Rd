@@ -7,6 +7,7 @@
 get_testing_data()
 }
 \value{
+A dataframe with the following 7 columns:
 \describe{
 \item{Jaar/Year}{Year of notification}
 \item{Week/Week number*}{Week of notification}
@@ -19,4 +20,7 @@ get_testing_data()
 }
 \description{
 Get testing data published by RIVM
+}
+\examples{
+mean(get_testing_data()$Labs)
 }

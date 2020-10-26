@@ -2,11 +2,12 @@
 % Please edit documentation in R/icu.R
 \name{get_icu_data_long}
 \alias{get_icu_data_long}
-\title{Get ICU patients data in a long format}
+\title{Get ICU patients data publshed by by NICE (Nationale Intesive Care Evaluatie) in a long format}
 \usage{
 get_icu_data_long()
 }
 \value{
+A dataframe with the 3 following columns:
 \describe{
 \item{Datum/Date}{Date of notification}
 \item{Type/Type}{Type of measurement: i.e., Totaal ingezette IC's, Toename opnamen (IC), Totaal opnamen (IC), Cumulatief opnamen (IC), Toename ontslag (ziekenhuis), Cumulatief ontslag (ziekenhuis), Toename ontslag (overleden), Cumulatief ontslag (overleden), Totaal ontslag (IC).}
@@ -19,4 +20,8 @@ get_icu_data_long()
 ** Deaths outside hospitals are not included in these numbers.
 *** These people are discharged from the IC but are still hospitalized. Eventually, these cases will be either added to the hospital discharges or IC deaths counts.
 }
+}
+\examples{
+get_icu_data_long() \%>\%
+head()
 }

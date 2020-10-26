@@ -10,7 +10,7 @@ https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/a2960b68-9d3f-4
 get_sewage_data()
 }
 \value{
-
+A dataframe with  11 columns
 }
 \description{
 a sample of the sewage is taken for 24 hours per treatment plant and per unit of time. These samples are analysed by RIVM researchers for the number of virus particles.

@@ -2,14 +2,12 @@
 % Please edit documentation in R/icu.R
 \name{get_icu_data_wide}
 \alias{get_icu_data_wide}
-\title{Get ICU patients data in a wide format}
+\title{Get ICU patients data published by NICE (Nationale Intesive Care Evaluatie) in a wide format}
 \usage{
 get_icu_data_wide()
 }
-\arguments{
-\item{type}{}
-}
 \value{
+A dataframe with the 7 following columns:
 \describe{
 \item{Datum/Date}{Date of notification}
 \item{IngezetteICs/Used IC units}{Number of intensive care (IC) units* with at least one Dutch COVID-19 case on the date of notification}
@@ -21,9 +19,16 @@ get_icu_data_wide()
 }
 }
 \description{
+The intensive care datasets describe the new and cumulative number of COVID-19 intensive care unit (ICU) admissions per day.
+}
+\details{
 \itemize{
 \item These can be situated in either the Netherlands or in Germany.
 ** Deaths outside hospitals are not included in these numbers.
 *** These people are discharged from the IC but are still hospitalized. Eventually, these cases will be either added to the hospital discharges or IC deaths counts.
 }
+}
+\examples{
+get_icu_data_wide() \%>\%
+head()
 }

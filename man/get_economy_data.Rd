@@ -7,6 +7,7 @@
 get_economy_data()
 }
 \value{
+A dataframe with the following 3 columns:
 \describe{
 \item{Bedrijfsnaam}{Name of company requesting financial support*}
 \item{Vestigingsplaats}{Location of company	}
@@ -17,6 +18,6 @@ get_economy_data()
 The NOW register, published by UWV, mentions the companies that requested and received an advance on the reimbursement.
 }
 \examples{
-sum(economy_data$`UITBETAALD VOORSCHOTBEDRAG`)
+sum(get_economy_data()$`UITBETAALD VOORSCHOTBEDRAG`)
 
 }

@@ -2,7 +2,7 @@
 #' Get testing data published by RIVM
 #'
 #'
-#' @return
+#' @return A dataframe with the following 7 columns:
 #' \describe{
 #'   \item{Jaar/Year}{Year of notification}
 #'   \item{Week/Week number*}{Week of notification}
@@ -15,6 +15,7 @@
 #' @export
 #'
 #' @examples
+#' mean(get_testing_data()$Labs)
 get_testing_data <- function(){
 
   url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-misc/data-test/RIVM_NL_test_depr_2020-04-20.csv'
@@ -25,7 +26,7 @@ get_testing_data <- function(){
 #' Get statistics for the underlying condition of deceased COVID-19 patients younger than 70
 #'
 #'
-#' @return
+#' @return A dataframe with the following 3 columns:
 #' \describe{
 #'   \item{Datum/Date}{Date of notification}
 #'   \item{Type/Type}{Type of test measurement (i.e., Totaal gemeld, Onderliggende aandoeningen en/of zwangerschap, Geen onderliggende aandoening, Niet vermeld)}
@@ -34,6 +35,8 @@ get_testing_data <- function(){
 #' @export
 #'
 #' @examples
+#' get_underlying_statistics() %>%
+#' head()
 get_underlying_statistics <- function(){
 
   url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-misc/data-underlying/data-underlying_statistics/RIVM_NL_deceased_under70_statistics.csv'
@@ -45,7 +48,7 @@ get_underlying_statistics <- function(){
 #' Get data for the underlying condition of deceased COVID-19 patients younger than 70
 #'
 #'
-#' @return
+#' @return A dataframe with the following 3 columns:
 #' \describe{
 #'   \item{Datum/Date}{Date of notification}
 #'   \item{Type/Type}{Type of test measurement (i.e., Totaal gemeld, Onderliggende aandoeningen en/of zwangerschap, Geen onderliggende aandoening, Niet vermeld)}
@@ -67,9 +70,8 @@ get_underlying_conditions <- function(){
 
 #' Get data for the measures taken by the government to fight the spread of Covid-19
 #'
-#' @param lang
 #'
-#' @return
+#' @return A dataframe with the following 9 columns:
 #' \describe{
 #'   \item{measureID}{Measure ID}
 #'   \item{measureDescription}{Description of the enforced measure}
@@ -85,7 +87,7 @@ get_underlying_conditions <- function(){
 #'
 #' @examples
 #' dim(get_measures_data())
-get_measures_data <- function(lang = 'nl'){
+get_measures_data <- function(){
 
   url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-misc/data-measures/NLD_measures_latest.csv'
 
@@ -96,7 +98,7 @@ get_measures_data <- function(lang = 'nl'){
 #' Get data for companies that have requested for financial aid from the government
 #'
 #' The NOW register, published by UWV, mentions the companies that requested and received an advance on the reimbursement.
-#' @return
+#' @return A dataframe with the following 3 columns:
 #' \describe{
 #'   \item{Bedrijfsnaam}{Name of company requesting financial support*}
 #'   \item{Vestigingsplaats}{Location of company	}
@@ -105,7 +107,7 @@ get_measures_data <- function(lang = 'nl'){
 #' @export
 #'
 #' @examples
-#' sum(economy_data$`UITBETAALD VOORSCHOTBEDRAG`)
+#' sum(get_economy_data()$`UITBETAALD VOORSCHOTBEDRAG`)
 #'
 get_economy_data <- function(){
 
@@ -119,7 +121,7 @@ get_economy_data <- function(){
 #'
 #' The reproduction number R gives the average number of people infected by one person with COVID-19.
 #'
-#' @return
+#' @return A dataframe with the following 4 columns:
 #' \describe{
 #'   \item{Date}{date for which the reproduction number has been estimated}
 #'   \item{Rt_low}{lower limit 95% confidence interval	}
@@ -129,7 +131,7 @@ get_economy_data <- function(){
 #' @export
 #'
 #' @examples
-#' mean(reproduction_rate$Rt_avg,na.rm = T)
+#' mean(get_reproduction_rate()$Rt_avg,na.rm = T)
 #' @source https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/ed0699d1-c9d5-4436-8517-27eb993eab6e?tab=relations
 get_reproduction_rate <- function(){
 
@@ -149,7 +151,7 @@ get_reproduction_rate <- function(){
 #'
 #'a sample of the sewage is taken for 24 hours per treatment plant and per unit of time. These samples are analysed by RIVM researchers for the number of virus particles.
 #'
-#' @return
+#' @return A dataframe with  11 columns
 #' @export
 #'
 #' @examples
@@ -164,6 +166,21 @@ get_sewage_data <- function(){
 }
 
 
+#'  Get the number of suspected patients in the Netherlands
+#'
+#' @return A dataframe with the following 3 columns
+#' @export
+#'
+#' @examples
+#' get_suspected_patients() %>%
+#' dim()
+get_suspected_patients<- function(){
+  url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-dashboard/data-suspects/RIVM_NL_suspects.csv'
+  suspected_patients  <- readr::read_csv(pins::pin(url))
+  suspected_patients
+
+
+}
 
 
 

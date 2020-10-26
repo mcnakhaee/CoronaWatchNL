@@ -12,6 +12,8 @@
 #' @export
 #' @source cbs.nl
 #' @examples
+#' get_mortality_rate() %>%
+#' dim()
 get_mortality_rate <- function(lang = 'en'){
   if (lang =='en'){
     url <- 'https://opendata.cbs.nl/CsvDownload/csv/70895ENG/TypedDataSet?dl=43B70'

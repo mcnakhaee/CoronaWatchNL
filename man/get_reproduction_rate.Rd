@@ -10,6 +10,7 @@ https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/ed0699d1-c9d5-4
 get_reproduction_rate()
 }
 \value{
+A dataframe with the following 4 columns:
 \describe{
 \item{Date}{date for which the reproduction number has been estimated}
 \item{Rt_low}{lower limit 95\% confidence interval	}
@@ -21,5 +22,5 @@ get_reproduction_rate()
 The reproduction number R gives the average number of people infected by one person with COVID-19.
 }
 \examples{
-mean(reproduction_rate$Rt_avg,na.rm = T)
+mean(get_reproduction_rate()$Rt_avg,na.rm = T)
 }

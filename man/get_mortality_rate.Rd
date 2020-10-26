@@ -24,3 +24,7 @@ A tibble with 4 variables
 \description{
 Get mortality data from CBS
 }
+\examples{
+get_mortality_rate() \%>\%
+dim()
+}

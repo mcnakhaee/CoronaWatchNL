@@ -7,6 +7,7 @@
 get_underlying_statistics()
 }
 \value{
+A dataframe with the following 3 columns:
 \describe{
 \item{Datum/Date}{Date of notification}
 \item{Type/Type}{Type of test measurement (i.e., Totaal gemeld, Onderliggende aandoeningen en/of zwangerschap, Geen onderliggende aandoening, Niet vermeld)}
@@ -15,4 +16,8 @@ get_underlying_statistics()
 }
 \description{
 Get statistics for the underlying condition of deceased COVID-19 patients younger than 70
+}
+\examples{
+get_underlying_statistics() \%>\%
+head()
 }

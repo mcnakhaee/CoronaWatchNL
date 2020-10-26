@@ -19,18 +19,19 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/CoronaWatchNL)](https://CRAN.R-project.org/package=CoronaWatchNL)
 <!-- badges: end -->
+CoronaWatchNL is an R package that allow you to have access to a wide range range of Covid-19 data in the Netherlands. This package mainly uses data that is collected and released by the CoronaWatchNL repository on Github. However, it also provides more datasets that are not included in that repository such, weekly mortality rate.
 
-The goal of CoronaWatchNL is to ...
+At the moment, the following category of datasets can be accessed via this package:
+
+
+
+
+
 
 ## Installation
 
-You can install the released version of CoronaWatchNL from [CRAN](https://CRAN.R-project.org) with:
+You can install the development version of CoronaWatchNL from [GitHub](https://github.com/) with:
 
-``` r
-install.packages("CoronaWatchNL")
-```
-
-And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -42,6 +43,8 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(CoronaWatchNL)
+library(tidyverse)
+library(ggthemes)
 ## basic example code
 ```
 

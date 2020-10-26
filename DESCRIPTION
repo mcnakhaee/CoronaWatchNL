@@ -1,18 +1,19 @@
 Package: CoronaWatchNL
 Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Muhammad",
+           family = "Chenariyan Nakhaee",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "mcnakhaee@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    roxygen2
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -22,5 +23,7 @@ Imports:
     readr,
     magrittr,
     jsonlite,
-    dplyr
+    dplyr,
+    rlang (>= 0.1.2),
+    tibble
 VignetteBuilder: knitr
