@@ -77,8 +77,8 @@ get_daily_cases_per_municpality <- function(){
 #' @export
 #' @source for further information look at \url{https://github.com/J535D165/CoronaWatchNL/master/data-geo/data-national/}
 #' @examples
-#' get_national_cases()
-get_national_cases <- function(){
+#' get_daily_national_cases()
+get_daily_national_cases <- function(){
 
   url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-geo/data-national/RIVM_NL_national.csv'
   data_geo_national <- readr::read_csv(url)
@@ -94,7 +94,7 @@ get_national_cases <- function(){
 #' @return A dataframe of 6 columns
 #' @export
 #' @source for further information look at \url{https://github.com/J535D165/CoronaWatchNL/master/data-geo/data-national/}
-get_provincial_cases <- function(){
+get_daily_provincial_cases <- function(){
 
   url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-geo/data-provincial/RIVM_NL_provincial.csv'
   data_geo_provincial <- readr::read_csv(pins::pin(url))
@@ -104,19 +104,3 @@ get_provincial_cases <- function(){
 }
 
 
-#' Get the reported count of cases in each municipality (county-region) in Netherlands by date
-#'
-#'
-#' @return A dataframe of 8 columns
-#' @export
-#' @source for further information look at \url{https://github.com/J535D165/CoronaWatchNL/master/data-geo/data-national/}
-#' @examples
-#' get_municipal_cases()
-get_municipal_cases <- function(){
-
-  url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-geo/data-municipal/RIVM_NL_municipal.csv'
-  data_geo_municipal <- readr::read_csv(pins::pin(url))
-  data_geo_municipal
-
-
-}
