@@ -22,5 +22,5 @@ A dataframe with the following 4 columns:
 The reproduction number R gives the average number of people infected by one person with COVID-19.
 }
 \examples{
-mean(get_reproduction_rate()$Rt_avg,na.rm = T)
+\dontrun{mean(get_reproduction_rate()$Rt_avg,na.rm = TRUE)}
 }

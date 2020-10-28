@@ -3,6 +3,9 @@
 \name{get_cumilative_cases_per_municpality}
 \alias{get_cumilative_cases_per_municpality}
 \title{Get Covid-19 cases data broken down by municipality}
+\source{
+for further information look at \url{https://github.com/J535D165/CoronaWatchNL/master/data-geo/data-national/}
+}
 \usage{
 get_cumilative_cases_per_municpality(lang = "en")
 }
@@ -10,7 +13,7 @@ get_cumilative_cases_per_municpality(lang = "en")
 \item{lang}{Specify the language of the resulting dataframe (\code{nl} for Dutch \code{en} for English)}
 }
 \value{
-A tibble with 6 variables
+A tibble with the following 6 columns
 \describe{
 \item{Date_of_report/Datum}{}
 \item{Municipality_code/Gemeentecode}{}
@@ -25,6 +28,5 @@ A tibble with 6 variables
 Get Covid-19 cases data broken down by municipality
 }
 \examples{
-get_cumilative_cases_per_municpality() \%>\%
-head()
+\dontrun{get_cumilative_cases_per_municpality()}
 }

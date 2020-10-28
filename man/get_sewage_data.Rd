@@ -16,5 +16,5 @@ A dataframe with  11 columns
 a sample of the sewage is taken for 24 hours per treatment plant and per unit of time. These samples are analysed by RIVM researchers for the number of virus particles.
 }
 \examples{
-mean(sewage_data$RNA_per_ml,na.rm = T)
+mean(get_sewage_data()$RNA_per_ml,na.rm = TRUE)
 }

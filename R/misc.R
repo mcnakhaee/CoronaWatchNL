@@ -13,7 +13,7 @@
 #'   \item{Aantal/Count}{Number of people tested for COVID-19 (Totaal), and number of positively tested people for COVID-19 (Positief**) per week}
 #'   }
 #' @export
-#'
+#' @source for further information look at \url{https://github.com/J535D165/CoronaWatchNL/tree/master/data-misc/}
 #' @examples
 #' mean(get_testing_data()$Labs)
 get_testing_data <- function(){
@@ -33,10 +33,9 @@ get_testing_data <- function(){
 #'   \item{AantalCumulatief/Cumulative count}{The cumulative number of deceased COVID-19 cases younger than 70 (Totaal gemeld) with (Onderliggende aandoening en/of zwangerschap) or without (Geen onderliggende aandoening) an underlying condition and/or pregnancy, and the cumulative count of cases where it was unknown whether they had an underlying condition and/or were pregnant (Niet vermeld)}
 #'   }
 #' @export
-#'
+#' @source for further information look at \url{https://github.com/J535D165/CoronaWatchNL/tree/master/data-misc/}
 #' @examples
-#' get_underlying_statistics() %>%
-#' head()
+#' \dontrun{get_underlying_statistics()}
 get_underlying_statistics <- function(){
 
   url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-misc/data-underlying/data-underlying_statistics/RIVM_NL_deceased_under70_statistics.csv'
@@ -55,11 +54,10 @@ get_underlying_statistics <- function(){
 #'   \item{AantalCumulatief/Cumulative count}{The cumulative number of deceased COVID-19 cases younger than 70 (Totaal gemeld) with (Onderliggende aandoening en/of zwangerschap) or without (Geen onderliggende aandoening) an underlying condition and/or pregnancy, and the cumulative count of cases where it was unknown whether they had an underlying condition and/or were pregnant (Niet vermeld)}
 #'   }
 #' @export
-#'
+#' @source for further information look at \url{https://github.com/J535D165/CoronaWatchNL/tree/master/data-misc/}
 #' @examples
-#' get_underlying_conditions() %>%
-#'  arrange(desc(AantalCumulatief)) %>%
-#'  slice(1)
+#' \dontrun{get_underlying_conditions() %>%
+#'  dplyr::arrange(dplyr::desc(AantalCumulatief))}
 get_underlying_conditions <- function(){
 
   url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-misc/data-underlying/data-underlying_conditions/RIVM_NL_deceased_under70_conditions.csv'
@@ -84,7 +82,7 @@ get_underlying_conditions <- function(){
 #'   \item{notes}{Notes about the measure	}
 #'   }
 #' @export
-#'
+#' @source for further information look at \url{https://github.com/J535D165/CoronaWatchNL/tree/master/data-misc/}
 #' @examples
 #' dim(get_measures_data())
 get_measures_data <- function(){
@@ -105,10 +103,9 @@ get_measures_data <- function(){
 #'   \item{Uitbetaald voorschotbedrag}{The advance payment to the company in euros}
 #'   }
 #' @export
-#'
+#' @source for further information look at \url{https://github.com/J535D165/CoronaWatchNL/tree/master/data-misc/}
 #' @examples
-#' sum(get_economy_data()$`UITBETAALD VOORSCHOTBEDRAG`)
-#'
+#' \dontrun{sum(get_economy_data()$`UITBETAALD VOORSCHOTBEDRAG`)}
 get_economy_data <- function(){
 
   url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-misc/data-economy/now-registry-20200710.csv'
@@ -131,7 +128,7 @@ get_economy_data <- function(){
 #' @export
 #'
 #' @examples
-#' mean(get_reproduction_rate()$Rt_avg,na.rm = T)
+#' \dontrun{mean(get_reproduction_rate()$Rt_avg,na.rm = TRUE)}
 #' @source https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/ed0699d1-c9d5-4436-8517-27eb993eab6e?tab=relations
 get_reproduction_rate <- function(){
 
@@ -155,7 +152,7 @@ get_reproduction_rate <- function(){
 #' @export
 #'
 #' @examples
-#' mean(sewage_data$RNA_per_ml,na.rm = T)
+#' mean(get_sewage_data()$RNA_per_ml,na.rm = TRUE)
 #' @source https://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/a2960b68-9d3f-4dc3-9485-600570cd52b9
 get_sewage_data <- function(){
 
@@ -170,10 +167,9 @@ get_sewage_data <- function(){
 #'
 #' @return A dataframe with the following 3 columns
 #' @export
-#'
+#' @source for further information look at \url{https://github.com/J535D165/CoronaWatchNL/tree/master/data-misc/}
 #' @examples
-#' get_suspected_patients() %>%
-#' dim()
+#' \dontrun{get_suspected_patients()}
 get_suspected_patients<- function(){
   url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-dashboard/data-suspects/RIVM_NL_suspects.csv'
   suspected_patients  <- readr::read_csv(pins::pin(url))
@@ -184,3 +180,18 @@ get_suspected_patients<- function(){
 
 
 
+#' Get population data of regions in the Netherlands
+#'
+#' @return  A dataframe with the following 7 columns
+#' @export
+#'
+#' @examples
+#' \dontrun{get_populatuon_per_region()}
+get_populatuon_per_region <- function(){
+  url <- 'https://opendata.cbs.nl/CsvDownload/csv/03759ned/UntypedDataSet?dl=3A09C'
+  populatuon_per_region <- readr::read_delim(url,delim = ';')
+  populatuon_per_region <- populatuon_per_region %>%
+    dplyr::filter(Perioden  == 2020,`Burgerlijke staat` == 'Totaal burgerlijke staat') %>%
+    dplyr::rename(Regions = `Regio's`)
+
+}

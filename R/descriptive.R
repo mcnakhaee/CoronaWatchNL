@@ -12,7 +12,7 @@
 #'   \item{AantalCumulatief/Total_count}{ Number of diagnosed (Totaal), hospitalized (Ziekenhuisopname), and deceased (Overleden) female (vrouw), male (man), and non-specified cases on the date of notification since the start of the outbreak}
 #' }
 #' @export
-#'
+#' @source for further information look at \url{https://github.com/J535D165/CoronaWatchNL/master/data-geo/data-national/}
 #' @examples
 #' get_cases_by_age() %>%
 #' dplyr::distinct(LeeftijdGroep)
@@ -157,19 +157,4 @@ get_deceased_cases_by_sex_age <- function(lang = 'nl') {
 
 
 
-#' Get population data of regions in the Netherlands
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' get_populatuon_per_region() %>%
-#' head()
-get_populatuon_per_region <- function(){
-  url <- 'https://opendata.cbs.nl/CsvDownload/csv/03759ned/UntypedDataSet?dl=3A09C'
-  populatuon_per_region <- readr::read_delim(url,delim = ';')
-  populatuon_per_region <- populatuon_per_region %>%
-    dplyr::filter(Perioden  == 2020,`Burgerlijke staat` == 'Totaal burgerlijke staat') %>%
-    dplyr::rename(Regions = `Regio's`)
 
-}

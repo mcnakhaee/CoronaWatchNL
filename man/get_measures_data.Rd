@@ -3,6 +3,9 @@
 \name{get_measures_data}
 \alias{get_measures_data}
 \title{Get data for the measures taken by the government to fight the spread of Covid-19}
+\source{
+for further information look at \url{https://github.com/J535D165/CoronaWatchNL/tree/master/data-misc/}
+}
 \usage{
 get_measures_data()
 }

@@ -3,6 +3,9 @@
 \name{get_cases_by_age}
 \alias{get_cases_by_age}
 \title{Get Covid-19 cases data broken down by َthe age group of patients}
+\source{
+for further information look at \url{https://github.com/J535D165/CoronaWatchNL/master/data-geo/data-national/}
+}
 \usage{
 get_cases_by_age(lang = "nl")
 }

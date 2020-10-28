@@ -3,16 +3,18 @@
 \name{get_daily_cases_per_municpality}
 \alias{get_daily_cases_per_municpality}
 \title{Get daily number of cases per municipality (regions)}
+\source{
+for further information look at \url{https://github.com/J535D165/CoronaWatchNL/master/data-geo/data-national/}
+}
 \usage{
 get_daily_cases_per_municpality()
 }
 \value{
-
+A dataframe with 12 columns
 }
 \description{
 Get daily number of cases per municipality (regions)
 }
 \examples{
-get_daily_cases_per_municpality() \%>\%
-head()
+\dontrun{get_daily_cases_per_municpality()}
 }

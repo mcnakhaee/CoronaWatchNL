@@ -3,16 +3,18 @@
 \name{get_national_cases}
 \alias{get_national_cases}
 \title{Get the reported count of cases in the Netherlands by date}
+\source{
+for further information look at \url{https://github.com/J535D165/CoronaWatchNL/master/data-geo/data-national/}
+}
 \usage{
 get_national_cases()
 }
 \value{
-
+A dataframe with 4 columns
 }
 \description{
 Get the reported count of cases in the Netherlands by date
 }
 \examples{
-get_national_cases() \%>\%
-dim()
+get_national_cases()
 }

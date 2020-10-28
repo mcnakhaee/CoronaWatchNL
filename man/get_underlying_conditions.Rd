@@ -3,6 +3,9 @@
 \name{get_underlying_conditions}
 \alias{get_underlying_conditions}
 \title{Get data for the underlying condition of deceased COVID-19 patients younger than 70}
+\source{
+for further information look at \url{https://github.com/J535D165/CoronaWatchNL/tree/master/data-misc/}
+}
 \usage{
 get_underlying_conditions()
 }
@@ -18,7 +21,6 @@ A dataframe with the following 3 columns:
 Get data for the underlying condition of deceased COVID-19 patients younger than 70
 }
 \examples{
-get_underlying_conditions() \%>\%
- arrange(desc(AantalCumulatief)) \%>\%
- slice(1)
+\dontrun{get_underlying_conditions() \%>\%
+ dplyr::arrange(dplyr::desc(AantalCumulatief))}
 }

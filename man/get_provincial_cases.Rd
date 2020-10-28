@@ -3,16 +3,15 @@
 \name{get_provincial_cases}
 \alias{get_provincial_cases}
 \title{Get the reported count of cases in each province in Netherlands by date}
+\source{
+for further information look at \url{https://github.com/J535D165/CoronaWatchNL/master/data-geo/data-national/}
+}
 \usage{
 get_provincial_cases()
 }
 \value{
-
+A dataframe of 6 columns
 }
 \description{
 Get the reported count of cases in each province in Netherlands by date
-}
-\examples{
-get_provincial_cases() \%>\%
-dim()
 }

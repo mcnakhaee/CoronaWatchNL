@@ -7,7 +7,7 @@
 get_all_national_cases()
 }
 \value{
-
+Returns a dataframe of results containing detalied Covid-19 cases in the Netherlands
 }
 \description{
 Get a detailed dataset of  all reported case  in the Netherlands

@@ -3,6 +3,9 @@
 \name{get_underlying_statistics}
 \alias{get_underlying_statistics}
 \title{Get statistics for the underlying condition of deceased COVID-19 patients younger than 70}
+\source{
+for further information look at \url{https://github.com/J535D165/CoronaWatchNL/tree/master/data-misc/}
+}
 \usage{
 get_underlying_statistics()
 }
@@ -18,6 +21,5 @@ A dataframe with the following 3 columns:
 Get statistics for the underlying condition of deceased COVID-19 patients younger than 70
 }
 \examples{
-get_underlying_statistics() \%>\%
-head()
+\dontrun{get_underlying_statistics()}
 }

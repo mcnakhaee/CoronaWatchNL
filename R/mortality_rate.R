@@ -1,5 +1,6 @@
 #' Get mortality data from CBS
 #'
+#'
 #' @param lang Specify the language of the resulting dataframe (`nl` for Dutch `en` for English)
 #'
 #' @return A tibble with 4 variables
@@ -10,11 +11,17 @@
 #'   \item{Periods/Overledenen_aantal}{}
 #' }
 #' @export
-#' @source cbs.nl
+#' @source \url{cbs.nl}
 #' @examples
-#' get_mortality_rate() %>%
-#' dim()
+#' \dontrun{get_mortality_rate()}
 get_mortality_rate <- function(lang = 'en'){
+  # library(cbsodataR)
+  # #"Language" = "nl"
+  # ds <- cbs_get_datasets("Language" = "nl")
+  # ds %>% View()
+  # cbs_get_data('37979eng')
+  # cbs_get_data('70895ENG')
+
   if (lang =='en'){
     url <- 'https://opendata.cbs.nl/CsvDownload/csv/70895ENG/TypedDataSet?dl=43B70'
     nl_mortality_rate <- readr::read_delim(url,delim = ';')
@@ -34,10 +41,3 @@ get_mortality_rate <- function(lang = 'en'){
 }
 
 
-
-# library(cbsodataR)
-# #"Language" = "nl"
-# ds <- cbs_get_datasets("Language" = "nl")
-# ds %>% View()
-# cbs_get_data('37979eng')
-# cbs_get_data('70895ENG')

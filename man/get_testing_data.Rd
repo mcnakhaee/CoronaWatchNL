@@ -3,6 +3,9 @@
 \name{get_testing_data}
 \alias{get_testing_data}
 \title{Get testing data published by RIVM}
+\source{
+for further information look at \url{https://github.com/J535D165/CoronaWatchNL/tree/master/data-misc/}
+}
 \usage{
 get_testing_data()
 }

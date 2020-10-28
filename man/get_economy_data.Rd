@@ -3,6 +3,9 @@
 \name{get_economy_data}
 \alias{get_economy_data}
 \title{Get data for companies that have requested for financial aid from the government}
+\source{
+for further information look at \url{https://github.com/J535D165/CoronaWatchNL/tree/master/data-misc/}
+}
 \usage{
 get_economy_data()
 }
@@ -18,6 +21,5 @@ A dataframe with the following 3 columns:
 The NOW register, published by UWV, mentions the companies that requested and received an advance on the reimbursement.
 }
 \examples{
-sum(get_economy_data()$`UITBETAALD VOORSCHOTBEDRAG`)
-
+\dontrun{sum(get_economy_data()$`UITBETAALD VOORSCHOTBEDRAG`)}
 }

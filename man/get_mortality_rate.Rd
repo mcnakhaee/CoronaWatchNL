@@ -4,7 +4,7 @@
 \alias{get_mortality_rate}
 \title{Get mortality data from CBS}
 \source{
-cbs.nl
+\url{cbs.nl}
 }
 \usage{
 get_mortality_rate(lang = "en")
@@ -25,6 +25,5 @@ A tibble with 4 variables
 Get mortality data from CBS
 }
 \examples{
-get_mortality_rate() \%>\%
-dim()
+\dontrun{get_mortality_rate()}
 }

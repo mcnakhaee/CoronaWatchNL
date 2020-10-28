@@ -3,6 +3,9 @@
 \name{get_suspected_patients}
 \alias{get_suspected_patients}
 \title{Get the number of suspected patients in the Netherlands}
+\source{
+for further information look at \url{https://github.com/J535D165/CoronaWatchNL/tree/master/data-misc/}
+}
 \usage{
 get_suspected_patients()
 }
@@ -13,6 +16,5 @@ A dataframe with the following 3 columns
 Get the number of suspected patients in the Netherlands
 }
 \examples{
-get_suspected_patients() \%>\%
-dim()
+\dontrun{get_suspected_patients()}
 }
