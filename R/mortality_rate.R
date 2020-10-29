@@ -1,7 +1,7 @@
 #' Get mortality data from CBS
 #'
 #'
-#' @param lang Specify the language of the resulting dataframe (`nl` for Dutch `en` for English)
+#' @param lang Specify the language of the resulting dataframe (`nl` for Dutch `en` for English), default `en`
 #'
 #' @return A tibble with 4 variables
 #' \describe{
@@ -15,24 +15,29 @@
 #' @examples
 #' \dontrun{get_mortality_rate()}
 get_mortality_rate <- function(lang = 'en'){
-  # library(cbsodataR)
-  # #"Language" = "nl"
-  # ds <- cbs_get_datasets("Language" = "nl")
-  # ds %>% View()
-  # cbs_get_data('37979eng')
-  # cbs_get_data('70895ENG')
+
+#
+#   if (lang =='en'){
+#     url <- 'https://opendata.cbs.nl/CsvDownload/csv/70895ENG/TypedDataSet?dl=43B70'
+#     nl_mortality_rate <- readr::read_delim(url,delim = ';')
+#     nl_mortality_rate <- nl_mortality_rate %>%
+#       dplyr::rename(Age_group = `Age, 31 December`,
+#              Death_count = `Deaths (aantal)` )
+#   }else if (lang =='nl') {
+#     url <- 'https://opendata.cbs.nl/CsvDownload/csv/70895ned/UntypedDataSet?dl=43B72'
+#     nl_mortality_rate <- readr::read_delim(url,delim = ';') %>%
+#       dplyr::rename(Leeftijd = `Leeftijd (op 31 december)` ,
+#              Overledenen_aantal = `Overledenen (aantal)`  )
+#
+#   }
+#   nl_mortality_rate
+
 
   if (lang =='en'){
-    url <- 'https://opendata.cbs.nl/CsvDownload/csv/70895ENG/TypedDataSet?dl=43B70'
-    nl_mortality_rate <- readr::read_delim(url,delim = ';')
-    nl_mortality_rate <- nl_mortality_rate %>%
-      dplyr::rename(Age_group = `Age, 31 December`,
-             Death_count = `Deaths (aantal)` )
+    # check this too: 37979eng
+    nl_mortality_rate  <-  cbsodataR::cbs_get_data('70895ENG')
   }else if (lang =='nl') {
-    url <- 'https://opendata.cbs.nl/CsvDownload/csv/70895ned/UntypedDataSet?dl=43B72'
-    nl_mortality_rate <- readr::read_delim(url,delim = ';') %>%
-      dplyr::rename(Leeftijd = `Leeftijd (op 31 december)` ,
-             Overledenen_aantal = `Overledenen (aantal)`  )
+    nl_mortality_rate <- cbsodataR::cbs_get_data('70895ned')
 
   }
   nl_mortality_rate

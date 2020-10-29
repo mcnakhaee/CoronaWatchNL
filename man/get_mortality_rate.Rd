@@ -10,7 +10,7 @@
 get_mortality_rate(lang = "en")
 }
 \arguments{
-\item{lang}{Specify the language of the resulting dataframe (\code{nl} for Dutch \code{en} for English)}
+\item{lang}{Specify the language of the resulting dataframe (\code{nl} for Dutch \code{en} for English), default \code{en}}
 }
 \value{
 A tibble with 4 variables

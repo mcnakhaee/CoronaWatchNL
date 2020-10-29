@@ -10,16 +10,21 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![CRAN
 status](https://www.r-pkg.org/badges/version/CoronaWatchNL)](https://CRAN.R-project.org/package=CoronaWatchNL)
 <!-- badges: end --> CoronaWatchNL is an R package that allow you to
-have access to a wide range range of Covid-19 data in the Netherlands.
-This package mainly uses data that is collected and released by the
-CoronaWatchNL repository on Github. However, it also provides more
-datasets that are not included in that repository such, weekly mortality
-rate.
+have an up-to-date access to a wide range range of Covid-19 related
+datasets in the Netherlands. This package is heavily based on the
+[CoronaWatchNL](https://github.com/J535D165/CoronaWatchNL) repository on
+GitHub which collects and releases this information on a daily basis.
+However, the R package also provides more datasets that are not included
+in the original repository, such as [the weekly mortality rate
+data](https://www.cbs.nl/en-gb/series/mortality-per-week) published by
+CBS () .
 
-At the moment, the following category of datasets can be accessed via
-this package:
+At the moment, the following category of datasets are available through
+this R package:
 
 ### Geographical datasets
+
+These datasets are
 
 | Dataset                                             | Source | Variables                                                                                                | Function                                                                           |
 | --------------------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
@@ -43,6 +48,24 @@ this package:
 | COVID-19 intensive care patient counts with country of hospitalization | LCPS           | Date, Country of Hospitalization, Total COVID-19 ICU admissions                                                                                                          | `get_lcps_data()`                            |
 
 ### Mortality Rate
+
+| Dataset               | Source                                                                                       | Variables                                                                                  | Function               |
+| --------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ---------------------- |
+| Weekly mortality rate | [CBS.nl](https://opendata.cbs.nl/portal.html?_la=nl&_catalog=CBS&tableId=70895ned&_theme=75) | Sex, Age group of the deceased person on 31 December , Periods, Number of registered death | `get_mortality_rate()` |
+
+### Miscellaneous datasets
+
+| Dataset                                                                               | Source                                                                                       | Variables                                                                                                          | Function                      |
+| ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------------- |
+| Population per region (municipality)                                                  | [CBS.nl](https://opendata.cbs.nl/portal.html?_la=nl&_catalog=CBS&tableId=70895ned&_theme=75) | Periods, Regions, Population                                                                                       | `get_population_per_region()` |
+| Suspected patients in NL                                                              | [National Dashboard](https://github.com/J535D165/CoronaWatchNL#data-collection-sources)      | Date, Type of measure, Count                                                                                       | `get_suspected_patients()`    |
+| COVID-19 particles in sewage                                                          | RIVM                                                                                         |                                                                                                                    | `get_sewage_data()`           |
+| Reproduction index COVID-19 virus                                                     | RIVM                                                                                         |                                                                                                                    | `get_reproduction_rate()`     |
+| Government financial aid to companies                                                 | UWV                                                                                          | Company, Location, Advance                                                                                         | `get_economy_data()`          |
+| COVID-19 measures by the government                                                   | European Commission Joint Research Centre                                                    | Various variables on governmental measures (in English)                                                            | `get_measures_data()`         |
+| Underlying conditions and/or pregnancy in deceased COVID-19 cased under the age of 70 | RIVM                                                                                         | Date, Type of condition, Cumulative count                                                                          | `get_underlying_conditions()` |
+| Underlying conditions and/or pregnancy in deceased COVID-19 cased under the age of 70 | RIVM                                                                                         | Date, Type of condition, Cumulative count                                                                          | `get_underlying_statistics()` |
+| COVID-19 tests in NL per week                                                         | RIVM                                                                                         | Year, Calendar week, Start date (Monday), End date (Sunday), Included labs, Type (Total and positive tests), Count | `get_testing_data()`          |
 
 ## Installation
 
@@ -83,18 +106,12 @@ You can include R chunks like so:
 
 ``` r
 mortality_rate <- get_mortality_rate()
-#> Parsed with column specification:
-#> cols(
-#>   Sex = col_character(),
-#>   `Age, 31 December` = col_character(),
-#>   Periods = col_character(),
-#>   `Deaths (aantal)` = col_double()
-#> )
 mortality_rate %>% 
-  filter(!Periods %in% c('2017','2018','2019'),Sex!="Total male and female") %>% 
-  ggplot(aes(x = seq_along(Periods),y = Death_count)) +
+  filter(Periods >'2019',!Periods %in% c('2019JJ00'),Sex == 'T001038',Age31December == 10000) %>% 
+  ggplot(aes(x = seq_along(Periods),y = Deaths_1)) +
   geom_line() +
-  facet_grid( Age_group~Sex) +
+  #scale_x_continuous(labels = )
+  facet_grid( Age31December~Sex,scales = 'free_y') +
   theme_fivethirtyeight()
 ```
 

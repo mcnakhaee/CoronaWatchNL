@@ -186,8 +186,8 @@ get_suspected_patients<- function(){
 #' @export
 #'
 #' @examples
-#' \dontrun{get_populatuon_per_region()}
-get_populatuon_per_region <- function(){
+#' \dontrun{get_population_per_region()}
+get_population_per_region <- function(){
   url <- 'https://opendata.cbs.nl/CsvDownload/csv/03759ned/UntypedDataSet?dl=3A09C'
   populatuon_per_region <- readr::read_delim(url,delim = ';')
   populatuon_per_region <- populatuon_per_region %>%
