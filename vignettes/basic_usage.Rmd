@@ -37,8 +37,8 @@ municipalBoundaries <- st_read("https://geodata.nationaalgeoregister.nl/cbsgebie
 
 ```{r}
 
-daily_cases_per_municpality <- get_daily_cases_per_municpality()
-populatuon_per_region <- get_populatuon_per_region()
+daily_cases_per_municpality <- get_daily_cases_per_municipality()
+populatuon_per_region <- get_population_per_region()
 
 daily_cases_per_municpality <- daily_cases_per_municpality %>% 
   inner_join(populatuon_per_region,by = c('Municipality_name' = 'Regions')) %>% 
@@ -111,3 +111,42 @@ transition_manual(day_char_,cumulative = T) +
 ```
 
 
+```{r fig.height=20,fig.width=10}
+ data %>% 
+  #head(10000)
+  filter(day == '2020-10-27') %>% 
+  ggplot() +
+  geom_sf(aes(fill = dis_avg),color = 'gray95') +
+  
+      scale_fill_manual(
+    values  = c(
+      'gray95',
+      '#fee440',
+      '#FFBA08',
+      '#FAA307',
+      '#F48C06',
+      '#E85D04',
+      '#DC2F02',
+      '#D00000',
+      '#9D0208',
+      '#6A040F',
+      '#370617',
+      '#03071e'
+
+
+
+    )
+  ) +
+  labs( title = '',
+    subtitle = '',
+    fill = ' ',
+    caption = '') +
+  theme_void() +
+  theme(legend.position = 'none',
+    text = element_text(family = 'Poppins Light'),
+        plot.subtitle = element_text(family = 'Poppins Light',size = 13,margin = margin(b = 10)) ,
+        plot.title = element_text(family = 'Poppins Light',size = 15,margin = margin(t = 10,b = 10)))
+
+
+
+```
