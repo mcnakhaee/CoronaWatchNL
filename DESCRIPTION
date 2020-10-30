@@ -1,13 +1,13 @@
 Package: CoronaWatchNL
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.2
+Title: COVID-related data in the Netherlands from a variety of sources, packaged for use in R
+Version: 0.0.3
 Authors@R: 
     person(given = "Muhammad",
            family = "Chenariyan Nakhaee",
            role = c("aut", "cre"),
            email = "mcnakhaee@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: COVID-related data in the Netherlands
 License: MIT + file LICENSE
 Suggests: 
     testthat,
@@ -26,5 +26,5 @@ Imports:
     dplyr,
     rlang (>= 0.1.2),
     tibble,
-    cbsodataR
+    cbsodataR,
 VignetteBuilder: knitr
