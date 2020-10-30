@@ -7,6 +7,8 @@ output: github_document
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  message = FALSE,
+  warning = FALSE,
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
@@ -21,17 +23,33 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 CoronaWatchNL is an R package that allow you to have an up-to-date  access to a wide range range of Covid-19 related datasets in the Netherlands. This package is heavily based on the [CoronaWatchNL](https://github.com/J535D165/CoronaWatchNL) repository on GitHub which collects and releases this information on a daily basis. However, the R package also provides more datasets that are not included in the original repository, such as [the weekly mortality rate data](https://www.cbs.nl/en-gb/series/mortality-per-week) published by CBS () .
 
-At the moment, the following category of datasets are available through this R package:
+## Installation
+
+You can install the development version of CoronaWatchNL from [GitHub](https://github.com/) with:
+
+
+``` r
+# install.packages("devtools")
+devtools::install_github("mcnakhaee/CoronaWatchNL")
+```
+
+## 
+
+### Usage
+
+At the moment, the following category of datasets are available via this R package:
+
+
 
 ### Geographical datasets
 
-These datasets are 
+
 
 | Dataset                                             | Source | Variables                                                    | Function                                                     |
 | --------------------------------------------------- | ------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Reported case counts by date in NL                  | RIVM   | Date, Type (Total, hospitalized and deceased COVID-19 cases), (Cumulative) Count | `get_daily_national_cases()`                                 |
 | Reported case counts by date in NL per province     | RIVM   | Date, Province, Type (Total, hospitalized and deceased COVID-19 cases), (Cumulative) Count | `get_daily_provincial_cases()`                               |
-| Reported case counts by date in NL per municipality | RIVM   | Date, Municipality, Province, Type (Total, hospitalized and deceased COVID-19 cases), (Cumulative) Count | `get_daily_cases_per_municpality`()/`get_cumilative_cases_per_municpality()`### |
+| Reported case counts by date in NL per municipality | RIVM   | Date, Municipality, Province, Type (Total, hospitalized and deceased COVID-19 cases), (Cumulative) Count | `get_daily_cases_per_municipality()`,`get_cumilative_cases_per_municipality()`### |
 
 ### Descriptive datasets
 
@@ -51,6 +69,18 @@ These datasets are
 | ------------------------------------------------------------ | -------------- | ------------------------------------------------------------ | -------------------------------------------- |
 | COVID-19 intensive care patient counts in NL  (Wide or long Format) | Stichting NICE | Date, New, Total and Cumulative ICU admissions per day, Number of ICUs with at least one COVID-19 case, New and Cumulative fatal, survived and discharged ICU admissions | `get_icu_data_wide()`/ `get_icu_data_long`() |
 | COVID-19 intensive care patient counts with country of hospitalization | LCPS           | Date, Country of Hospitalization, Total COVID-19 ICU admissions | `get_lcps_data()`                            |
+
+### Mobility data
+
+
+
+| Dataset                       | Source                                                       | Variables | Function                                                     |
+| ----------------------------- | ------------------------------------------------------------ | --------- | ------------------------------------------------------------ |
+| Apple's daily mobility report | [GitHub](https://github.com/ActiveConclusion/COVID19_mobility) |           | `get_apple_mobility_data()`                                  |
+| Google's mobility report      | [GitHub](https://github.com/ActiveConclusion/COVID19_mobility) |           | `get_google_mobility_data()`                                 |
+| Waze's mobility report        | [GitHub](https://github.com/ActiveConclusion/COVID19_mobility) |           | `get_waze_mobility_city_level_data()`,`get_waze_mobility_country_level_data()` |
+
+
 
 ### Mortality Rate
 
@@ -75,18 +105,6 @@ These datasets are
 
 
 
-
-
-
-## Installation
-
-You can install the development version of CoronaWatchNL from [GitHub](https://github.com/) with:
-
-
-``` r
-# install.packages("devtools")
-devtools::install_github("mcnakhaee/CoronaWatchNL")
-```
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
@@ -95,20 +113,59 @@ This is a basic example which shows you how to solve a common problem:
 library(CoronaWatchNL)
 library(tidyverse)
 library(ggthemes)
+library(geofacet)
+library(gghighlight)
 ## basic example code
 ```
+```{r fig.height=20,fig.width=20}
+province_case <- get_daily_provincial_cases()
+province_case %>% 
+  filter(Provincienaam =='Utrecht') %>% count(Type)
+province_case %>% 
+  replace_na(list(Aantal = 0)) %>% 
+  drop_na(Provincienaam) %>% 
+  mutate(name = Provincienaam) %>% 
+  filter(Type =='Totaal') %>% 
+  ggplot(aes(x = Datum,y = Aantal,,group = Type,color = Type)) +
+    geom_line(color = 'indianred',
+            size = 1,
+            alpha = 1) +
+  geom_point(color = 'indianred', size = 2) +
+  gghighlight(
+    use_direct_label = FALSE,
+    unhighlighted_params = list(
+      size = 1,
+      width = 0.5,
+      color = '#F6DAB4',
+      alpha  = 0.5
+    )
+  ) +
+  facet_geo(~name,grid = 'nl_prov_grid1') +
+  theme_minimal()
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-mortality_rate <- get_mortality_rate()
-mortality_rate %>% 
-  filter(Periods >'2019',!Periods %in% c('2019JJ00'),Sex == 'T001038',Age31December == 10000) %>% 
-  ggplot(aes(x = seq_along(Periods),y = Deaths_1)) +
-  geom_line() +
-  #scale_x_continuous(labels = )
-  facet_grid( Age31December~Sex,scales = 'free_y') +
-  theme_fivethirtyeight()
 ```
 
+
+```{r}
+apple_mobility <- get_apple_mobility_data()
+glimpse(apple_mobility)
+
+```
+
+
+```{r fig.height=7,fig.width=10}
+# inspired by: https://kjhealy.github.io/covdata/articles/mobility-data.html
+apple_mobility %>% 
+  filter(`sub-region`  !='Total') %>% 
+  mutate(over_under = driving < 0) %>% 
+  ggplot(aes(x = date, y = driving, 
+                       group = `sub-region` , color = over_under)) +
+    geom_hline(yintercept = 0, color = "gray40") + 
+  geom_col() +
+  scale_color_manual(values = c("steelblue" , "firebrick")) +
+  guides(color = FALSE) + 
+  labs(x = "Date", y = "Relative Mobility", title = "Relative Trends in Apple Maps Usage for Driving in the Netherlands") +
+  facet_wrap(~`sub-region` ) +
+  theme_minimal()
+```
 
