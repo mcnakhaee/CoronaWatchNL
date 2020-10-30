@@ -16,8 +16,8 @@
 #' @export
 #' @source for further information look at \url{https://github.com/J535D165/CoronaWatchNL/master/data-geo/data-national/}
 #' @examples
-#' \dontrun{get_cumilative_cases_per_municpality()}
-get_cumilative_cases_per_municpality <- function(lang = 'en'){
+#' \dontrun{get_cumilative_cases_per_municipality()}
+get_cumilative_cases_per_municipality <- function(lang = 'en'){
   url <- 'https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_cumulatief.json'
   aantallen_gemeente_cumulatief <- jsonlite::fromJSON(url)
   aantallen_gemeente_cumulatief <- tibble::as_tibble(aantallen_gemeente_cumulatief)
@@ -46,8 +46,8 @@ get_cumilative_cases_per_municpality <- function(lang = 'en'){
 #' @export
 #' @source for further information look at \url{https://github.com/J535D165/CoronaWatchNL/master/data-geo/data-national/}
 #' @examples
-#' \dontrun{get_daily_cases_per_municpality()}
-get_daily_cases_per_municpality <- function(){
+#' \dontrun{get_daily_cases_per_municipality()}
+get_daily_cases_per_municipality <- function(){
   url <- 'https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json'
   daily_cases_per_municpality  <- jsonlite::fromJSON(url)
   daily_cases_per_municpality  <- tibble::as_tibble(daily_cases_per_municpality )
