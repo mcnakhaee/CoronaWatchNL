@@ -9,15 +9,15 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/CoronaWatchNL)](https://CRAN.R-project.org/package=CoronaWatchNL)
-<!-- badges: end --> CoronaWatchNL is an R package that allow you to
-have an up-to-date access to a wide range range of Covid-19 related
-datasets in the Netherlands. This package is heavily based on the
+<!-- badges: end --> CoronaWatchNL is an R package that allows you to
+access a wide range of Covid-19 related datasets in the Netherlands.
+This package is heavily based on the
 [CoronaWatchNL](https://github.com/J535D165/CoronaWatchNL) repository on
-GitHub which collects and releases this information on a daily basis.
+GitHub, which collects and releases this information on a daily basis.
 However, the R package also provides more datasets that are not included
 in the original repository, such as [the weekly mortality rate
 data](https://www.cbs.nl/en-gb/series/mortality-per-week) published by
-CBS () .
+CBS.
 
 ## Installation
 
@@ -29,9 +29,7 @@ You can install the development version of CoronaWatchNL from
 devtools::install_github("mcnakhaee/CoronaWatchNL")
 ```
 
-## 
-
-### Usage
+## Usage
 
 At the moment, the following category of datasets are available via this
 R package:
