@@ -18,7 +18,7 @@
 #' mean(get_testing_data()$Labs)
 get_testing_data <- function(){
 
-  url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-misc/data-test/RIVM_NL_test_depr_2020-04-20.csv'
+  url <- 'https://raw.githubusercontent.com/J535D165/CoronaWatchNL/master/data-misc/data-test/RIVM_NL_test_latest.csv'
   testing_data  <- readr::read_csv(pins::pin(url))
   testing_data
 }
