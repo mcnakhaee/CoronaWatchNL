@@ -1,6 +1,6 @@
 Package: CoronaWatchNL
 Title: COVID-related data in the Netherlands from a variety of sources, packaged for use in R
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: 
     person(given = "Muhammad",
            family = "Chenariyan Nakhaee",
