@@ -101,24 +101,30 @@ library(gghighlight)
 
 ``` r
 province_case <- get_daily_provincial_cases()
-province_case %>% 
-  filter(Provincienaam =='Utrecht') %>% count(Type)
+province_case %>%
+  filter(Provincienaam == 'Utrecht') %>% count(Type)
 #> # A tibble: 3 x 2
 #>   Type                 n
 #>   <chr>            <int>
-#> 1 Overleden          246
-#> 2 Totaal             246
-#> 3 Ziekenhuisopname   246
-province_case %>% 
-  replace_na(list(Aantal = 0)) %>% 
-  drop_na(Provincienaam) %>% 
-  mutate(name = Provincienaam) %>% 
-  filter(Type =='Totaal') %>% 
-  ggplot(aes(x = Datum,y = Aantal,,group = Type,color = Type)) +
-    geom_line(color = 'indianred',
+#> 1 Overleden          250
+#> 2 Totaal             250
+#> 3 Ziekenhuisopname   250
+province_case %>%
+  replace_na(list(Aantal = 0)) %>%
+  drop_na(Provincienaam) %>%
+  mutate(name = Provincienaam) %>%
+  filter(Type == 'Totaal') %>%
+  ggplot(aes(
+    x = Datum,
+    y = Aantal,
+    ,
+    group = Type,
+    color = Type
+  )) +
+  geom_line(color = 'indianred',
             size = 1,
             alpha = 1) +
-  geom_point(color = 'indianred', size = 2) +
+  #geom_point(color = 'indianred', size = 2) +
   gghighlight(
     use_direct_label = FALSE,
     unhighlighted_params = list(
@@ -128,16 +134,91 @@ province_case %>%
       alpha  = 0.5
     )
   ) +
-  facet_geo(~name,grid = 'nl_prov_grid1') +
+  facet_geo( ~ name, grid = 'nl_prov_grid1') +
   theme_minimal()
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 ``` r
+library(sf)
+library(gganimate)
+library(santoku)
+library(foreign)
+municipalBoundaries <- st_read("https://geodata.nationaalgeoregister.nl/cbsgebiedsindelingen/wfs?request=GetFeature&service=WFS&version=2.0.0&typeName=cbs_gemeente_2020_gegeneraliseerd&outputFormat=json")
+
+
+daily_cases_per_municpality <- get_daily_cases_per_municipality()
+populatuon_per_region <- get_population_per_region()
+
+daily_cases_per_municpality <- daily_cases_per_municpality %>%
+  inner_join(populatuon_per_region, by = c('Municipality_name' = 'Regions')) %>%
+  mutate(
+    Date_of_publication = lubridate::as_date(Date_of_publication),
+    day = lubridate::round_date(Date_of_publication , unit = 'day'),
+    day = lubridate::as_date(day),
+    avg = 100000 * as.numeric(Total_reported) / as.numeric(`Bevolking op 1 januari (aantal)`),
+    dis_avg = chop(avg, c(0, 0, 0.5, 1, 5, 12, 20, 35, 55, 80, 100, 200))
+  )
+# merge boundary data
+data <- municipalBoundaries%>% 
+  right_join(daily_cases_per_municpality ,by=c(statnaam="Municipality_name"))
+
+
+### Warning: it will take a lot of time to generate this animation!
+data %>%
+
+  ggplot() +
+  geom_sf(aes(fill = dis_avg), color = 'gray95') +
+  scale_fill_manual(
+    values  = c(
+      'gray95',
+      '#fee440',
+      '#FFBA08',
+      '#FAA307',
+      '#F48C06',
+      '#E85D04',
+      '#DC2F02',
+      '#D00000',
+      '#9D0208',
+      '#6A040F',
+      '#370617',
+      '#03071e'
+    )
+  ) +
+  coord_sf(datum = NA) +
+  labs(
+    title = 'Covid-19 Cases per 100000 Inhabitants in the Netherlands',
+    subtitle = 'Date: {current_frame}',
+    fill = 'Counts per 100000',
+    caption = 'Source: RIVM'
+  ) +
+  theme_void() +
+  theme(
+    text = element_text(family = 'Poppins Light'),
+    plot.subtitle = element_text(
+      family = 'Poppins Light',
+      size = 13,
+      margin = margin(b = 10)
+    ) ,
+    plot.title = element_text(
+      family = 'Poppins Light',
+      size = 15,
+      margin = margin(t = 10, b = 10)
+    )
+  ) +
+  transition_manual(day_char_, cumulative = T) +
+  ease_aes("sine") +
+  enter_fade(alpha = 0.5) +
+  exit_fade(alpha = 0.5)
+```
+
+![](inst/animation.gif)
+
+``` r
 apple_mobility <- get_apple_mobility_data()
 glimpse(apple_mobility)
-#> Rows: 4,918
+#> Rows: 4,986
 #> Columns: 8
 #> $ country            <chr> "Netherlands", "Netherlands", "Netherlands", "Ne...
 #> $ `sub-region`       <chr> "Drenthe", "Drenthe", "Drenthe", "Drenthe", "Dre...
@@ -151,18 +232,22 @@ glimpse(apple_mobility)
 
 ``` r
 # inspired by: https://kjhealy.github.io/covdata/articles/mobility-data.html
-apple_mobility %>% 
-  filter(`sub-region`  !='Total') %>% 
-  mutate(over_under = driving < 0) %>% 
-  ggplot(aes(x = date, y = driving, 
-                       group = `sub-region` , color = over_under)) +
-    geom_hline(yintercept = 0, color = "gray40") + 
+apple_mobility %>%
+  filter(`sub-region`  != 'Total') %>%
+  mutate(over_under = driving < 0) %>%
+  ggplot(aes(
+    x = date,
+    y = driving,
+    group = `sub-region` ,
+    color = over_under
+  )) +
+  geom_hline(yintercept = 0, color = "gray40") +
   geom_col() +
   scale_color_manual(values = c("steelblue" , "firebrick")) +
-  guides(color = FALSE) + 
+  guides(color = FALSE) +
   labs(x = "Date", y = "Relative Mobility", title = "Relative Trends in Apple Maps Usage for Driving in the Netherlands") +
-  facet_wrap(~`sub-region` ) +
+  facet_wrap( ~ `sub-region`) +
   theme_minimal()
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
